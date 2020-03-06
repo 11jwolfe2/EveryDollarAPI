@@ -7,7 +7,6 @@ import json as json
 
 site = "https://everydollar.id.ramseysolutions.net/sign-in?scope=openid%20profile%20email&response_type=code&client_id=everydollar&redirect_uri=https%3A%2F%2Fwww.everydollar.com%2Fapp%2Fauth&state=eyJmcm9tIjp7InBhdGhuYW1lIjoiL2J1ZGdldCJ9fQ&code_challenge=OTMnsDl29IHFOdd4MzyR93iAslsKO_O0Ea5fnBFRWlk&code_challenge_method=S256"
 signin = "https://everydollar.id.ramseysolutions.net/sign-in?scope=openid%20profile%20email&response_type=code&client_id=everydollar&redirect_uri=https%3A%2F%2Fwww.everydollar.com%2Fapp%2Fauth&state=eyJmcm9tIjp7InBhdGhuYW1lIjoiL2J1ZGdldCJ9fQ&code_challenge=OTMnsDl29IHFOdd4MzyR93iAslsKO_O0Ea5fnBFRWlk&code_challenge_method=S256"
-
 headerM = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
     'accept-encoding': 'gzip, deflate, br',
@@ -28,7 +27,7 @@ with requests.Session() as session:
     soup = BeautifulSoup(r.content, 'html5lib')
     token = soup.find('input', attrs={'name': 'authenticity_token'})['value']
     tokenEncode = urllib.parse.quote(token, safe='')
-    strategy = 'name_password'
+    strategy = 'lookup'
     service = 'user_sso_mfa'
     email = 'jwolfe72@gmail.com'
     #email = urllib.parse.quote(email, safe='')
@@ -45,7 +44,7 @@ with requests.Session() as session:
 
     #payload = 'authenticity_token=' + token + '&' + 'strategy=' + strategy + '&' + 'service=' + service + '&' + 'email=' + email + '&' + 'password=' + password
     r = session.post(signin, data=payload)
-    r = session.get("https://www.everydollar.com/app/auth?client_id=everydollar&code=FskE0gqTxdIbx8aXIVICrSuriR4&scope=openid%20profile%20email&state=eyJmcm9tIjp7InBhdGhuYW1lIjoiL2J1ZGdldCJ9fQ", headers=headerM)
+    #r = session.get("https://www.everydollar.com/app/auth?client_id=everydollar&code=FskE0gqTxdIbx8aXIVICrSuriR4&scope=openid%20profile%20email&state=eyJmcm9tIjp7InBhdGhuYW1lIjoiL2J1ZGdldCJ9fQ", headers=headerM)
     print(r.content)
     r = session.get("https://api.everydollar.com/user/")
     print(r.content)
